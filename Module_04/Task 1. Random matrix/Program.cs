@@ -30,16 +30,19 @@ namespace Task_1.Random_matrix
             }
 
             //вывод матрицы
+            long sum = 0;
             Console.WriteLine("Результат:");
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
                     if (j != 0) Console.Write("\t");
-                    Console.Write("{0:# ### ### ###}", matrix[i, j]);
+                    Console.Write("{0:n0}", matrix[i, j]);
+                    sum += matrix[i, j];
                 }
                 Console.Write("\n");
             }
+            Console.WriteLine("Сумма всех элементов матрицы = {0}",string.Format("{0:n0}",sum));
 
             Console.ReadKey();
         }
