@@ -23,9 +23,9 @@ namespace Task.Mini_data_base
                 if (list.Count<string>() == 0) Console.WriteLine("База данных пуста!!!");
                 else
                 {
-                    for (int i = 0; i < list.Length; ++i)
+                    foreach (var item in list)
                     {
-                        Console.WriteLine(list[i]);
+                        Console.WriteLine(item);
                     }
                 }
             }
