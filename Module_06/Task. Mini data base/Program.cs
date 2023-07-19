@@ -31,8 +31,13 @@ namespace Task.Mini_data_base
             }
             else Console.WriteLine("База данных отсутствует!!!");
 
-            Console.ReadKey();
-            
+            Console.ReadKey();            
+        }
+
+        static void AddStringToArray(ref string[] words, string word)
+        {
+            Array.Resize(ref words, words.Length + 1);
+            words[words.Length - 1] = word;
         }
 
         static void InsertData()
@@ -43,11 +48,16 @@ namespace Task.Mini_data_base
 
             if (File.Exists(Path))
             {
-                list = File.ReadAllLines(Path);               
-            }
-            else
-            {
-                File.Create(Path);
+                using (StreamReader sr = new StreamReader(Path))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        string text = sr.ReadLine();
+                        AddStringToArray(ref list, text);
+                    }
+
+                    sr.Close();
+                }               
             }
 
             string[] line = new string[7];
@@ -71,8 +81,11 @@ namespace Task.Mini_data_base
 
             string str = string.Join("#",line);
 
-            File.AppendAllText(Path,str);
-         
+            using (StreamWriter sw = new StreamWriter(Path,true))
+            {
+                sw.WriteLine(str);
+                sw.Close();
+            }         
         }
 
         static void Main(string[] args)
@@ -100,8 +113,7 @@ namespace Task.Mini_data_base
                         break;
                     default:
                         break;
-                }
-                    
+                }                    
             }
         }
     }
