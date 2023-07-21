@@ -24,5 +24,15 @@ namespace Task._Permutation_of_words_in_a_sentence_v2
         {
             InitializeComponent();
         }
+
+        private void Button_Click_Revers(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Split(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
