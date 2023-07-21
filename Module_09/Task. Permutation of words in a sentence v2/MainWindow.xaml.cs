@@ -27,12 +27,23 @@ namespace Task._Permutation_of_words_in_a_sentence_v2
 
         private void Button_Click_Revers(object sender, RoutedEventArgs e)
         {
+            var words = this.Sentence.Text.Split(' ');
 
+            string str = string.Empty;
+
+            for (int i = words.Length - 1; i >= 0; --i)
+            {
+                str += words[i] + ' ';
+            }
+
+            this.ReversSentence.Content = str;
         }
 
         private void Button_Click_Split(object sender, RoutedEventArgs e)
         {
+            var words = this.Sentence.Text.Split(' ');
 
+            this.Words.ItemsSource = words;
         }
     }
 }
