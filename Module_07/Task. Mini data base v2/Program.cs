@@ -14,11 +14,11 @@ namespace Task.Mini_data_base_v2
 
             repository.ShowWorkers();
 
-            repository.AddWorker(new Worker(false));
+            repository.AddNewWorker();
 
             Console.ReadKey();
 
-            var list = repository.GetWorkersBetweenTwoDates(new DateTime(2023, 07, 19, 22, 50, 00), new DateTime(2023, 07, 19, 23, 00, 00));
+            var list = repository.GetWorkersBetweenTwoDates(new DateTime(2023, 07, 22, 15, 50, 00), new DateTime(2023, 07, 22, 15, 55, 00));
 
             foreach (var item in list)
             {

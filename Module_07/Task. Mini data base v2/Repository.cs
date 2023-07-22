@@ -2,6 +2,8 @@
 using System.Linq;
 using System.IO;
 using System.Globalization;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace Task.Mini_data_base_v2
 {
@@ -160,6 +162,23 @@ namespace Task.Mini_data_base_v2
 
             WriteData(workers);
 
+        }
+
+        public void AddNewWorker()
+        {
+            Console.WriteLine("Введите данные:");
+            Console.Write("Ф.И.О.: ");
+            string Name = Console.ReadLine();
+            Console.Write("Возраст: ");
+            string Age = Console.ReadLine();
+            Console.Write("Рост: ");
+            string Height = Console.ReadLine();
+            Console.Write("Дата рождения: ");
+            string Birthday = Console.ReadLine();
+            Console.Write("Место рождения: ");
+            string Place = Console.ReadLine();
+
+            AddWorker(new Worker(Name, Age, Height, Birthday, Place));
         }
 
         /// <summary>

@@ -14,25 +14,7 @@ namespace Task.Mini_data_base_v2
             this.Birthday = DateTime.Parse(Birthday);
             this.Place = Place;
         }
-
-        public Worker(bool empty = true)
-        {
-            id = 0;
-            Date = DateTime.Now;
-
-            Console.WriteLine("Введите данные:");
-            Console.Write("Ф.И.О.: ");
-            Name = Console.ReadLine();
-            Console.Write("Возраст: ");
-            Age = int.Parse(Console.ReadLine());
-            Console.Write("Рост: ");
-            Height = int.Parse(Console.ReadLine());
-            Console.Write("Дата рождения: ");
-            Birthday = DateTime.Parse(Console.ReadLine());
-            Console.Write("Место рождения: ");
-            Place = Console.ReadLine();
-
-        }
+               
 
         public int id { get; set; }
         public DateTime Date { get; set; }
