@@ -23,14 +23,19 @@ namespace Task_1.DataBase
             {
                 var json = File.ReadAllText(PathData);
 
-                Data = JsonConvert.DeserializeObject<List<Client>>(json);
+                var _Data = JsonConvert.DeserializeObject<List<Client>>(json);
+
+                if (_Data != null) Data = _Data;
             }
 
             if (File.Exists(PathUsers))
             {
                 var json = File.ReadAllText(PathUsers);
 
-                Users = JsonConvert.DeserializeObject<List<User>>(json);
+                var _Users = JsonConvert.DeserializeObject<List<User>>(json);
+
+                if (_Users != null) Users = _Users;
+
             }
         }
 
@@ -49,34 +54,71 @@ namespace Task_1.DataBase
         #region Users
         private void SaveUsers()
         {
-            var json = JsonConvert.SerializeObject(Users);
+            var json = JsonConvert.SerializeObject(Users, Formatting.Indented);
 
             File.WriteAllText(PathUsers, json);
         }
 
-        public void NewUser()
+        private int FindUser(string Name)
+        {
+            for (int i = 0; i < Users.Count; i++)
+            {
+                if (Users[i].Name == Name)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public User Identification()
         {
             Console.WriteLine("Введите имя пользователя:");
             var name = Console.ReadLine();
 
-            Console.WriteLine("Выберите роль пользователя:");
+            var fnd = FindUser(name);
 
-            int n = 0;
-
-            foreach (var role in Enum.GetValues(typeof(Roles)))
+            if ( fnd == -1)
             {
-                n++;
-                Console.WriteLine($"{n}. {role.ToString()}");
+                Console.WriteLine("Выберите роль пользователя:");
+
+                int n = 0;
+
+                foreach (var role in Enum.GetValues(typeof(Roles)))
+                {
+                    n++;
+                    Console.WriteLine($"{n}. {role.ToString()}");
+                }
+
+                int r = int.Parse(Console.ReadLine());
+
+                r = r > n ? 1 : r;
+
+                User usr = new User(name, (Roles)r);
+
+                Users.Add(usr);
+
+                SaveUsers();
+
+                return usr;
             }
-
-            int r = int.Parse(Console.ReadLine());
-
-            r = r > n ? 1 : r;
-
-            Users.Add(new User(name, r));
-
-            SaveUsers();
+            else
+            {
+                Console.WriteLine($"Пользователь {name} уже сужествует!");
+                return Users[fnd];
+            }
         }
         #endregion
+
+        public void ShowClients(User usr)
+        {
+            Console.Clear();
+
+            foreach (var item in Data)
+            {
+                
+            }
+        }
     }
 }

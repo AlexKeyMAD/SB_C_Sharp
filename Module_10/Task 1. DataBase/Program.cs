@@ -13,7 +13,9 @@ namespace Task_1.DataBase
             DataBase db = new DataBase();
             db.Initialosation();
 
-            db.NewUser();
+            User CurentUser = db.Identification();
+
+            db.ShowClients(CurentUser);
 
             Console.ReadKey();
         }
