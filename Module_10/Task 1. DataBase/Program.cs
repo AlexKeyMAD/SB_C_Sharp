@@ -11,6 +11,11 @@ namespace Task_1.DataBase
         static void Main(string[] args)
         {
             DataBase db = new DataBase();
+            db.Initialosation();
+
+            db.NewUser();
+
+            Console.ReadKey();
         }
     }
 }

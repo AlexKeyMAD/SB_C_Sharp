@@ -17,7 +17,7 @@ namespace Task_1.DataBase
         private string PathData = "database.json";
         private string PathUsers = "users.json";
 
-        DataBase()
+        public void Initialosation()
         {
             if (File.Exists(PathData))
             {
@@ -33,6 +33,7 @@ namespace Task_1.DataBase
                 Users = JsonConvert.DeserializeObject<List<User>>(json);
             }
         }
+
         ~DataBase()
         {
             SaveDataBase();
@@ -67,6 +68,12 @@ namespace Task_1.DataBase
                 n++;
                 Console.WriteLine($"{n}. {role.ToString()}");
             }
+
+            int r = int.Parse(Console.ReadLine());
+
+            r = r > n ? 1 : r;
+
+            Users.Add(new User(name, r));
 
             SaveUsers();
         }

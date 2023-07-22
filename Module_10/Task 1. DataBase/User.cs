@@ -15,5 +15,11 @@ namespace Task_1.DataBase
     {
         private string Name { get; set; }
         private Roles Role { get; set; }
+
+        User(string name, Roles role)
+        {
+            Name = name;
+            Role = role;
+        }
     }
 }
