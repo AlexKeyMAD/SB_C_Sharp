@@ -17,8 +17,8 @@ namespace Task_1.DataBase
         private string PassportSeries { get; set; }
         private string PassportNumber { get; set; }
 
-        public Client(User usr)
-        {      
+        public Client()
+        {    
 
             Console.Clear();
 
@@ -44,18 +44,16 @@ namespace Task_1.DataBase
             PassportNumber = pn;
         }
 
-        public void Change(User usr)
+        public void Change()
         {
-            if (usr is Consultant)
-            {
-                Console.WriteLine("Введите новый номер телефона:");
-                var str = Console.ReadLine();
+            Console.WriteLine("Введите новый номер телефона:");
+            var str = Console.ReadLine();
 
-                if (str != string.Empty) PhoneNumber = str;
-            }
+            if (str != string.Empty) PhoneNumber = str;
+          
         }
 
-        public string Info(User usr)
+        public string Info()
         {
             string str = string.Empty;
 
@@ -63,8 +61,8 @@ namespace Task_1.DataBase
             str += Name + "\t";
             str += Surname + "\t";
             str += PhoneNumber + "\t";
-            str += (usr is Consultant ? "*****" : PassportSeries) + "\t";
-            str += (usr is Consultant ? "********" : PassportNumber) + "\n";
+            str += "*****" + "\t";
+            str += "********" + "\n";
 
             return str;
         }

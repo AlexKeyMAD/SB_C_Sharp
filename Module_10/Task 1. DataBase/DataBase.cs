@@ -12,7 +12,7 @@ namespace Task_1.DataBase
     internal class DataBase
     {
         private List<Client> Data = new List<Client>();
-        private List<User> Users = new List<User>();
+        private List<Consultant> Users = new List<Consultant>();
 
         private string PathData = "database.json";
         private string PathUsers = "users.json";
@@ -32,7 +32,7 @@ namespace Task_1.DataBase
             {
                 var json = File.ReadAllText(PathUsers);
 
-                var _Users = JsonConvert.DeserializeObject<List<User>>(json);
+                var _Users = JsonConvert.DeserializeObject<List<Consultant>>(json);
 
                 if (_Users != null) Users = _Users;
 
@@ -72,7 +72,7 @@ namespace Task_1.DataBase
             return -1;
         }
 
-        public User Identification()
+        public Consultant Identification()
         {
             Console.WriteLine("Введите имя пользователя:");
             var name = Console.ReadLine();
@@ -95,12 +95,9 @@ namespace Task_1.DataBase
 
                 r = r > n ? 1 : r;
 
-                User usr = null;
-
-                if ((Roles)r == Roles.CONSULTANT)
-                {
-                    usr = new Consultant(name);
-                }
+                Consultant usr = null;
+                                
+                usr = new Consultant(name);
 
                 Users.Add(usr);
 
@@ -115,7 +112,7 @@ namespace Task_1.DataBase
         }
         #endregion
 
-        public void ShowClients(User usr)
+        public void ShowClients()
         {            
             int num = -1;
 
@@ -125,13 +122,11 @@ namespace Task_1.DataBase
 
                 for (var i = 0; i < Data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {Data[i].Info(usr)}");
+                    Console.WriteLine($"{i + 1}. {Data[i].Info()}");
                 }
 
-                Console.WriteLine("Выбирите действие:");
-                if (!(usr is Consultant)) Console.WriteLine("1. Добавить");
-                Console.WriteLine("2. Изменить");
-                if (!(usr is Consultant)) Console.WriteLine("3. Удалить");
+                Console.WriteLine("Выбирите действие:");                
+                Console.WriteLine("1. Изменить");
                 Console.WriteLine("0. Выход");
 
                 num = int.Parse(Console.ReadLine());
@@ -139,23 +134,10 @@ namespace Task_1.DataBase
                 switch (num)
                 {
                     case 1:
-                        if (!(usr is Consultant)) Data.Add(new Client(usr));
-                        break;
-                    case 2:
-                        {
                             Console.WriteLine($"Введите номер строки для изменения (1 - {Data.Count})");
                             var index = int.Parse(Console.ReadLine());
-                            if (index <= Data.Count && index > 0) Data[index - 1].Change(usr);
-                        }
-                        break;
-                    case 3:
-                        if (!(usr is Consultant))
-                        {
-                            Console.WriteLine($"Введите номер строки для удаления (1 - {Data.Count})");
-                            var index = int.Parse(Console.ReadLine());
-                            if (index <= Data.Count && index > 0) Data.RemoveAt(index - 1);
-                        }    
-                        break;
+                            if (index <= Data.Count && index > 0) Data[index - 1].Change();                        
+                        break;                    
                     default:
                         break;
                 }                    

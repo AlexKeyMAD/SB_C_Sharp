@@ -10,24 +10,17 @@ namespace Task_1.DataBase
     enum Roles
     {
         CONSULTANT = 1
-    }
+    }   
 
-    //[JsonObject(MemberSerialization.Fields)]
-    internal class User
+    [JsonObject(MemberSerialization.Fields)]
+    internal class Consultant
     {
-        protected string name;
-
+        private string name;
         public string GetName()
         {
             return name;
         }
 
-    }
-
-    [JsonObject(MemberSerialization.Fields)]
-    internal class Consultant : User
-    {
-        
         public Consultant(string n)
         {
             name = n;
