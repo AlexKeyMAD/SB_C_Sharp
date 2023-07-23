@@ -63,7 +63,7 @@ namespace Task_1.DataBase
         {
             for (int i = 0; i < Users.Count; i++)
             {
-                if (Users[i].Name == Name)
+                if (Users[i].GetName() == Name)
                 {
                     return i;
                 }
@@ -95,7 +95,12 @@ namespace Task_1.DataBase
 
                 r = r > n ? 1 : r;
 
-                User usr = new User(name, (Roles)r);
+                User usr = null;
+
+                if ((Roles)r == Roles.CONSULTANT)
+                {
+                    usr = new Consultant(name);
+                }
 
                 Users.Add(usr);
 
@@ -120,13 +125,13 @@ namespace Task_1.DataBase
 
                 for (var i = 0; i < Data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {Data[i].Info(usr.Role)}");
+                    Console.WriteLine($"{i + 1}. {Data[i].Info(usr)}");
                 }
 
                 Console.WriteLine("Выбирите действие:");
-                if (usr.Role != Roles.MANAGER) Console.WriteLine("1. Добавить");
+                if (!(usr is Consultant)) Console.WriteLine("1. Добавить");
                 Console.WriteLine("2. Изменить");
-                if (usr.Role != Roles.MANAGER) Console.WriteLine("3. Удалить");
+                if (!(usr is Consultant)) Console.WriteLine("3. Удалить");
                 Console.WriteLine("0. Выход");
 
                 num = int.Parse(Console.ReadLine());
@@ -134,17 +139,17 @@ namespace Task_1.DataBase
                 switch (num)
                 {
                     case 1:
-                        if (usr.Role != Roles.MANAGER) Data.Add(new Client(usr.Role));
+                        if (!(usr is Consultant)) Data.Add(new Client(usr));
                         break;
                     case 2:
                         {
                             Console.WriteLine($"Введите номер строки для изменения (1 - {Data.Count})");
                             var index = int.Parse(Console.ReadLine());
-                            if (index <= Data.Count && index > 0) Data[index - 1].Change(usr.Role);
+                            if (index <= Data.Count && index > 0) Data[index - 1].Change(usr);
                         }
                         break;
                     case 3:
-                        if (usr.Role != Roles.MANAGER)
+                        if (!(usr is Consultant))
                         {
                             Console.WriteLine($"Введите номер строки для удаления (1 - {Data.Count})");
                             var index = int.Parse(Console.ReadLine());

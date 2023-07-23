@@ -17,12 +17,8 @@ namespace Task_1.DataBase
         private string PassportSeries { get; set; }
         private string PassportNumber { get; set; }
 
-        public Client(Roles role = Roles.MANAGER)
-        {
-            if (role == Roles.MANAGER)
-            {
-                return;
-            }
+        public Client(User usr)
+        {      
 
             Console.Clear();
 
@@ -48,9 +44,9 @@ namespace Task_1.DataBase
             PassportNumber = pn;
         }
 
-        public void Change(Roles role = Roles.MANAGER)
+        public void Change(User usr)
         {
-            if (role == Roles.MANAGER)
+            if (usr is Consultant)
             {
                 Console.WriteLine("Введите новый номер телефона:");
                 var str = Console.ReadLine();
@@ -59,7 +55,7 @@ namespace Task_1.DataBase
             }
         }
 
-        public string Info(Roles role = Roles.MANAGER)
+        public string Info(User usr)
         {
             string str = string.Empty;
 
@@ -67,8 +63,8 @@ namespace Task_1.DataBase
             str += Name + "\t";
             str += Surname + "\t";
             str += PhoneNumber + "\t";
-            str += (role == Roles.MANAGER ? "*****" : PassportSeries) + "\t";
-            str += (role == Roles.MANAGER ? "********" : PassportNumber) + "\n";
+            str += (usr is Consultant ? "*****" : PassportSeries) + "\t";
+            str += (usr is Consultant ? "********" : PassportNumber) + "\n";
 
             return str;
         }
