@@ -17,6 +17,48 @@ namespace Task_1.DataBase
         private string PassportSeries { get; set; }
         private string PassportNumber { get; set; }
 
+        public Client(Roles role = Roles.MANAGER)
+        {
+            if (role == Roles.MANAGER)
+            {
+                return;
+            }
+
+            Console.Clear();
+
+            Console.Write("Фамилия: ");
+            var f = Console.ReadLine();
+            Console.Write("Имя: ");
+            var n = Console.ReadLine();
+            Console.Write("Отчество: ");
+            var s = Console.ReadLine();
+            Console.Write("Номер телефона: ");
+            var p = Console.ReadLine();
+            p = p == string.Empty ? "+7 000 000 00 00" : p;
+            Console.Write("Серия паспорта: ");
+            var ps = Console.ReadLine();
+            Console.Write("Номер паспорта: ");
+            var pn = Console.ReadLine();
+
+            FamilyName = f;
+            Name = n;
+            Surname = s;
+            PhoneNumber = p;
+            PassportSeries = ps;
+            PassportNumber = pn;
+        }
+
+        public void Change(Roles role = Roles.MANAGER)
+        {
+            if (role == Roles.MANAGER)
+            {
+                Console.WriteLine("Введите новый номер телефона:");
+                var str = Console.ReadLine();
+
+                if (str != string.Empty) PhoneNumber = str;
+            }
+        }
+
         public string Info(Roles role = Roles.MANAGER)
         {
             string str = string.Empty;
@@ -29,7 +71,6 @@ namespace Task_1.DataBase
             str += (role == Roles.MANAGER ? "********" : PassportNumber) + "\n";
 
             return str;
-
         }
     }
 }

@@ -21,12 +21,18 @@ namespace Task_1.DataBase
             get { return name; }
             set { name = value; }
         }
-        private Roles Role { get; set; }
+        private Roles role;
+
+        public Roles Role
+        {
+            get { return role; } 
+            set { role = value; } 
+        }
 
         public User(string name, Roles role)
         {
             this.name = name;
-            Role = role;
+            this.role = role;
         }       
     }
 }

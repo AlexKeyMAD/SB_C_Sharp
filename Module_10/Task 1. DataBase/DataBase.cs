@@ -104,20 +104,56 @@ namespace Task_1.DataBase
                 return usr;
             }
             else
-            {
-                Console.WriteLine($"Пользователь {name} уже сужествует!");
+            {                
                 return Users[fnd];
             }
         }
         #endregion
 
         public void ShowClients(User usr)
-        {
-            Console.Clear();
+        {            
+            int num = -1;
 
-            foreach (var item in Data)
+            while (num != 0)
             {
-                
+                Console.Clear();
+
+                for (var i = 0; i < Data.Count; ++i)
+                {
+                    Console.WriteLine($"{i + 1}. {Data[i].Info(usr.Role)}");
+                }
+
+                Console.WriteLine("Выбирите действие:");
+                if (usr.Role != Roles.MANAGER) Console.WriteLine("1. Добавить");
+                Console.WriteLine("2. Изменить");
+                if (usr.Role != Roles.MANAGER) Console.WriteLine("3. Удалить");
+                Console.WriteLine("0. Выход");
+
+                num = int.Parse(Console.ReadLine());
+
+                switch (num)
+                {
+                    case 1:
+                        if (usr.Role != Roles.MANAGER) Data.Add(new Client(usr.Role));
+                        break;
+                    case 2:
+                        {
+                            Console.WriteLine($"Введите номер строки для изменения (1 - {Data.Count})");
+                            var index = int.Parse(Console.ReadLine());
+                            if (index <= Data.Count && index > 0) Data[index - 1].Change(usr.Role);
+                        }
+                        break;
+                    case 3:
+                        if (usr.Role != Roles.MANAGER)
+                        {
+                            Console.WriteLine($"Введите номер строки для удаления (1 - {Data.Count})");
+                            var index = int.Parse(Console.ReadLine());
+                            if (index <= Data.Count && index > 0) Data.RemoveAt(index - 1);
+                        }    
+                        break;
+                    default:
+                        break;
+                }                    
             }
         }
     }
