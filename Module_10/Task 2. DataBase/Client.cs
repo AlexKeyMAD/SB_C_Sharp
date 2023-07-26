@@ -48,9 +48,8 @@ namespace Task_2.DataBase
         {
             var str = string.Empty;
 
-            if (usr is Manager)
-            {
-                Console.Write("Фамилия: ");
+            if (usr.GetType() == typeof(Manager))
+            {                 Console.Write("Фамилия: ");
                 str = Console.ReadLine();
                 if (str != string.Empty) FamilyName = str;
 
@@ -85,7 +84,7 @@ namespace Task_2.DataBase
             str += Name + "\t";
             str += Surname + "\t";
             str += PhoneNumber + "\t";
-            if (usr is Consultant)
+            if (usr.GetType() == typeof(Consultant)) // usr is Consultant
             {
                 str += "*****" + "\t";
                 str += "********" + "\n";
