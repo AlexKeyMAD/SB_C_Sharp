@@ -44,16 +44,40 @@ namespace Task_2.DataBase
             PassportNumber = pn;
         }
 
-        public void Change()
+        public void Change(Consultant usr)
         {
-            Console.WriteLine("Введите новый номер телефона:");
-            var str = Console.ReadLine();
+            var str = string.Empty;
 
+            if (usr is Manager)
+            {
+                Console.Write("Фамилия: ");
+                str = Console.ReadLine();
+                if (str != string.Empty) FamilyName = str;
+
+                Console.Write("Имя: ");
+                str = Console.ReadLine();
+                if (str != string.Empty) Name = str;
+
+                Console.Write("Отчество: ");
+                str = Console.ReadLine();
+                if (str != string.Empty) Surname = str;
+
+                Console.Write("Серия паспорта: ");
+                str = Console.ReadLine();
+                if (str != string.Empty) PassportSeries = str;
+
+                Console.Write("Номер паспорта: ");
+                str = Console.ReadLine();
+                if (str != string.Empty) PassportNumber = str;
+            }
+
+            Console.WriteLine("Номер телефона:");
+            str = Console.ReadLine();
             if (str != string.Empty) PhoneNumber = str;
           
         }
 
-        public string Info()
+        public string Info(Consultant usr)
         {
             string str = string.Empty;
 
@@ -61,8 +85,16 @@ namespace Task_2.DataBase
             str += Name + "\t";
             str += Surname + "\t";
             str += PhoneNumber + "\t";
-            str += "*****" + "\t";
-            str += "********" + "\n";
+            if (usr is Consultant)
+            {
+                str += "*****" + "\t";
+                str += "********" + "\n";
+            }
+            else
+            {
+                str += PassportSeries + "\t";
+                str += PassportNumber + "\n";
+            }
 
             return str;
         }

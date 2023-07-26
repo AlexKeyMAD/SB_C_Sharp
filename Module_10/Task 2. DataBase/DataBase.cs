@@ -54,7 +54,7 @@ namespace Task_2.DataBase
         #region Users
         private void SaveUsers()
         {
-            var json = JsonConvert.SerializeObject(Users, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(Users,Formatting.Indented);
 
             File.WriteAllText(PathUsers, json);
         }
@@ -96,8 +96,9 @@ namespace Task_2.DataBase
                 r = r > n ? 1 : r;
 
                 Consultant usr = null;
-                                
-                usr = new Consultant(name);
+
+                if ((Roles)r == Roles.CONSULTANT) usr = new Consultant(name);
+                else usr = new Manager(name);
 
                 Users.Add(usr);
 
@@ -112,7 +113,7 @@ namespace Task_2.DataBase
         }
         #endregion
 
-        public void ShowClients()
+        public void ShowClients(Consultant usr)
         {            
             int num = -1;
 
@@ -122,7 +123,7 @@ namespace Task_2.DataBase
 
                 for (var i = 0; i < Data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {Data[i].Info()}");
+                    Console.WriteLine($"{i + 1}. {Data[i].Info(usr)}");
                 }
 
                 Console.WriteLine("Выбирите действие:");                
@@ -136,7 +137,7 @@ namespace Task_2.DataBase
                     case 1:
                             Console.WriteLine($"Введите номер строки для изменения (1 - {Data.Count})");
                             var index = int.Parse(Console.ReadLine());
-                            if (index <= Data.Count && index > 0) Data[index - 1].Change();                        
+                            if (index <= Data.Count && index > 0) Data[index - 1].Change(usr);                        
                         break;                    
                     default:
                         break;

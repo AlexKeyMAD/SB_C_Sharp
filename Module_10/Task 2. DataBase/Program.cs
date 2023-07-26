@@ -15,7 +15,7 @@ namespace Task_2.DataBase
 
             Consultant CurentUser = db.Identification();
 
-            db.ShowClients();
+            db.ShowClients(CurentUser);
 
             Console.ReadKey();
         }

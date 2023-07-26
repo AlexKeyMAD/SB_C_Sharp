@@ -9,7 +9,8 @@ namespace Task_2.DataBase
 {
     enum Roles
     {
-        CONSULTANT = 1
+        CONSULTANT = 1,
+        MANAGER = 2
     }   
 
     [JsonObject(MemberSerialization.Fields)]
@@ -25,5 +26,12 @@ namespace Task_2.DataBase
         {
             name = n;
         }        
+    }
+
+    [JsonObject(MemberSerialization.Fields)]
+    internal class Manager : Consultant
+    {
+        public Manager(string n):base(n) { }
+        
     }
 }
