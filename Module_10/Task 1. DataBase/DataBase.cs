@@ -112,36 +112,5 @@ namespace Task_1.DataBase
         }
         #endregion
 
-        public void ShowClients()
-        {            
-            int num = -1;
-
-            while (num != 0)
-            {
-                Console.Clear();
-
-                for (var i = 0; i < Data.Count; ++i)
-                {
-                    Console.WriteLine($"{i + 1}. {Data[i].Info()}");
-                }
-
-                Console.WriteLine("Выбирите действие:");                
-                Console.WriteLine("1. Изменить");
-                Console.WriteLine("0. Выход");
-
-                num = int.Parse(Console.ReadLine());
-
-                switch (num)
-                {
-                    case 1:
-                            Console.WriteLine($"Введите номер строки для изменения (1 - {Data.Count})");
-                            var index = int.Parse(Console.ReadLine());
-                            if (index <= Data.Count && index > 0) Data[index - 1].Change();                        
-                        break;                    
-                    default:
-                        break;
-                }                    
-            }
-        }
     }
 }
