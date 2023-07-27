@@ -13,6 +13,7 @@ namespace Task_1.DataBase
     {
         private List<Client> Data = new List<Client>();
         private List<Consultant> Users = new List<Consultant>();
+        public ref List<Client> data { get { return ref Data; } }
 
         private string PathData = "database.json";
         private string PathUsers = "users.json";

@@ -27,7 +27,7 @@ namespace Task_1.DataBase
             name = n;
         }   
         
-        public void ShowData(ref List<DataBase> data)
+        public void ShowData(ref List<Client> data)
         {
             int num = -1;
 
@@ -37,7 +37,7 @@ namespace Task_1.DataBase
 
                 for (var i = 0; i < data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {data[i].Info()}");
+                    Console.WriteLine($"{i + 1}. {Info(data[i])}");
                 }
 
                 Console.WriteLine("Выбирите действие:");
@@ -50,24 +50,33 @@ namespace Task_1.DataBase
                 {
                     Console.WriteLine($"Введите номер строки для изменения (1 - {data.Count})");
                     var index = int.Parse(Console.ReadLine());
-                    if (index <= data.Count && index > 0) data[index - 1].Change();
+                    if (index <= data.Count && index > 0) Change(ref data, num);
                 }
                                 
             }
         }
 
-        public string Info(DataBase data)
+        private string Info(Client data)
         {
             string str = string.Empty;
 
             str += data.FamilyName + "\t";
-            str += Name + "\t";
-            str += Surname + "\t";
-            str += PhoneNumber + "\t";
+            str += data.Name + "\t";
+            str += data.Surname + "\t";
+            str += data.PhoneNumber + "\t";
             str += "*****" + "\t";
             str += "********" + "\n";
 
             return str;
+        }
+
+        public void Change(ref List<Client> data, int ind)
+        {
+            Console.WriteLine("Введите новый номер телефона:");
+            var str = Console.ReadLine();
+
+            if (str != string.Empty) data[ind].PhoneNumber = str;
+
         }
     }
 }
