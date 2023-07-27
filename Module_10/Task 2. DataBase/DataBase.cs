@@ -13,6 +13,7 @@ namespace Task_2.DataBase
     {
         private List<Client> Data = new List<Client>();
         private List<Consultant> Users = new List<Consultant>();
+        public ref List<Client> data { get { return ref Data; } }
 
         private string PathData = "database.json";
         private string PathUsers = "users.json";
@@ -54,7 +55,7 @@ namespace Task_2.DataBase
         #region Users
         private void SaveUsers()
         {
-            var json = JsonConvert.SerializeObject(Users,Formatting.Indented);
+            var json = JsonConvert.SerializeObject(Users, Formatting.Indented);
 
             File.WriteAllText(PathUsers, json);
         }
@@ -79,7 +80,7 @@ namespace Task_2.DataBase
 
             var fnd = FindUser(name);
 
-            if ( fnd == -1)
+            if (fnd == -1)
             {
                 Console.WriteLine("Выберите роль пользователя:");
 
@@ -107,42 +108,11 @@ namespace Task_2.DataBase
                 return usr;
             }
             else
-            {                
+            {
                 return Users[fnd];
             }
         }
         #endregion
 
-        public void ShowClients(Consultant usr)
-        {            
-            int num = -1;
-
-            while (num != 0)
-            {
-                Console.Clear();
-
-                for (var i = 0; i < Data.Count; ++i)
-                {
-                    Console.WriteLine($"{i + 1}. {Data[i].Info(usr)}");
-                }
-
-                Console.WriteLine("Выбирите действие:");                
-                Console.WriteLine("1. Изменить");
-                Console.WriteLine("0. Выход");
-
-                num = int.Parse(Console.ReadLine());
-
-                switch (num)
-                {
-                    case 1:
-                            Console.WriteLine($"Введите номер строки для изменения (1 - {Data.Count})");
-                            var index = int.Parse(Console.ReadLine());
-                            if (index <= Data.Count && index > 0) Data[index - 1].Change(usr);                        
-                        break;                    
-                    default:
-                        break;
-                }                    
-            }
-        }
     }
 }
