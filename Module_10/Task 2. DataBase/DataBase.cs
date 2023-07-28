@@ -57,6 +57,8 @@ namespace Task_2.DataBase
         #region Users
         /// <summary>
         /// Данный класс создан для правильной десериализации JSON, программа должна понимать какой класс в пользователе использовать
+        /// Этот класс включен в Json.NET с версии 7.0, но у меня версия ниже, поэтому класс здесь
+        /// взято от сюда: https://attach2process.wordpress.com/2017/02/19/deserializing-a-json-to-a-list-of-abstract-types-or-interfaces-with-newtonsoft-json-net-converter/
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public abstract class JsonCreationConverter<T> : JsonConverter
@@ -166,6 +168,5 @@ namespace Task_2.DataBase
             }
         }
         #endregion
-
     }
 }
