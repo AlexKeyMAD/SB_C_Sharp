@@ -17,6 +17,7 @@ namespace Task_2.DataBase
     internal class Consultant
     {
         private string name;
+        protected Roles role;
         public string GetName()
         {
             return name;
@@ -25,6 +26,7 @@ namespace Task_2.DataBase
         public Consultant(string n)
         {
             name = n;
+            role = Roles.CONSULTANT;
         }
 
         public virtual void ShowData(ref DataBase db)
@@ -84,7 +86,10 @@ namespace Task_2.DataBase
     [JsonObject(MemberSerialization.Fields)]
     internal class Manager : Consultant
     {
-        public Manager(string n) : base(n) { }
+        public Manager(string n) : base(n)
+        {
+            role = Roles.MANAGER;
+        }
 
         private string Info(Client data)
         {

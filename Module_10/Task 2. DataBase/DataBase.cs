@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Task_2.DataBase
 {
@@ -33,7 +35,7 @@ namespace Task_2.DataBase
             {
                 var json = File.ReadAllText(PathUsers);
 
-                var _Users = JsonConvert.DeserializeObject<List<Consultant>>(json);
+                var _Users = JsonConvert.DeserializeObject<List<Consultant>>(json,new UserConverter());
 
                 if (_Users != null) Users = _Users;
 
@@ -53,6 +55,57 @@ namespace Task_2.DataBase
         }
 
         #region Users
+        /// <summary>
+        /// Данный класс создан для правильной десериализации JSON, программа должна понимать какой класс в пользователе использовать
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public abstract class JsonCreationConverter<T> : JsonConverter
+        {
+            protected abstract T Create(Type objectType, JObject jObject);
+
+            public override bool CanConvert(Type objectType)
+            {
+                return typeof(T) == objectType;
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType,
+                object existingValue, JsonSerializer serializer)
+            {
+                try
+                {
+                    var jObject = JObject.Load(reader);
+                    var target = Create(objectType, jObject);
+                    serializer.Populate(jObject.CreateReader(), target);
+                    return target;
+                }
+                catch (JsonReaderException)
+                {
+                    return null;
+                }
+            }
+
+            public override void WriteJson(JsonWriter writer, object value,
+                JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class UserConverter : JsonCreationConverter<Consultant>
+        {
+            protected override Consultant Create(Type objectType, JObject jObject)
+            {
+                switch ((Roles)jObject["role"].Value<int>())
+                {
+                    case Roles.CONSULTANT:
+                        return new Consultant(jObject["name"].Value<string>());
+                    case Roles.MANAGER:
+                        return new Manager(jObject["name"].Value<string>());
+                }
+                return null;
+            }
+        }
+
         private void SaveUsers()
         {
             var json = JsonConvert.SerializeObject(Users, Formatting.Indented);
