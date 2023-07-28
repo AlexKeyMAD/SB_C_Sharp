@@ -27,7 +27,7 @@ namespace Task_2.DataBase
             name = n;
         }
 
-        public void ShowData(ref List<Client> data)
+        public virtual void ShowData(ref DataBase db)
         {
             int num = -1;
 
@@ -35,9 +35,9 @@ namespace Task_2.DataBase
             {
                 Console.Clear();
 
-                for (var i = 0; i < data.Count; ++i)
+                for (var i = 0; i < db.data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {Info(data[i])}");
+                    Console.WriteLine($"{i + 1}. {Info(db.data[i])}");
                 }
 
                 Console.WriteLine("Выбирите действие:");
@@ -48,9 +48,9 @@ namespace Task_2.DataBase
 
                 if (num == 1)
                 {
-                    Console.WriteLine($"Введите номер строки для изменения (1 - {data.Count})");
+                    Console.WriteLine($"Введите номер строки для изменения (1 - {db.data.Count})");
                     var index = int.Parse(Console.ReadLine());
-                    if (index <= data.Count && index > 0) Change(ref data, num);
+                    if (index <= db.data.Count && index > 0) Change(ref db, num - 1);
                 }
 
             }
@@ -70,13 +70,14 @@ namespace Task_2.DataBase
             return str;
         }
 
-        public void Change(ref List<Client> data, int ind)
+        public void Change(ref DataBase db, int ind)
         {
             Console.WriteLine("Введите новый номер телефона:");
             var str = Console.ReadLine();
 
-            if (str != string.Empty) data[ind].PhoneNumber = str;
+            if (str != string.Empty) db.data[ind].PhoneNumber = str;
 
+            db.SaveDataBase();
         }
     }
 
@@ -99,7 +100,7 @@ namespace Task_2.DataBase
             return str;
         }
 
-        public new void ShowData(ref List<Client> data)
+        public override void ShowData(ref DataBase db)
         {
             int num = -1;
 
@@ -107,56 +108,64 @@ namespace Task_2.DataBase
             {
                 Console.Clear();
 
-                for (var i = 0; i < data.Count; ++i)
+                for (var i = 0; i < db.data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {Info(data[i])}");
+                    Console.WriteLine($"{i + 1}. {Info(db.data[i])}");
                 }
 
                 Console.WriteLine("Выбирите действие:");
                 Console.WriteLine("1. Изменить");
                 Console.WriteLine("0. Выход");
 
-                num = int.Parse(Console.ReadLine());
+                var str = Console.ReadLine();
+
+                num = str == string.Empty ? -1: int.Parse(str);
 
                 if (num == 1)
                 {
-                    Console.WriteLine($"Введите номер строки для изменения (1 - {data.Count})");
-                    var index = int.Parse(Console.ReadLine());
-                    if (index <= data.Count && index > 0)
+                    Console.WriteLine($"Введите номер строки для изменения (1 - {db.data.Count})");
+
+                    var s = Console.ReadLine();
+
+                    var index = s == string.Empty? 0: int.Parse(s);
+
+                    if (index <= db.data.Count && index > 0)
                     {
                         Console.WriteLine("РЕДАКТИРОВАНИЕ");
-                        Console.WriteLine($" {num}\t{Info(data[num - 1])}");                        
+                        Console.WriteLine($" {index}\t{Info(db.data[index - 1])}");
+                        Change(ref db, index - 1);
                     }
                 }
-
             }
         }
 
-        public new void Change(ref List<Client> data, int ind)
+        public new void Change(ref DataBase db, int ind)
         {
             Console.WriteLine("Фамилия:");
             var str = Console.ReadLine();
-            if (str != string.Empty) data[ind].FamilyName = str;
+            if (str != string.Empty) db.data[ind].FamilyName = str;
 
             Console.WriteLine("Имя:");
             str = Console.ReadLine();
-            if (str != string.Empty) data[ind].Name = str;
+            if (str != string.Empty) db.data[ind].Name = str;
 
             Console.WriteLine("Отчество:");
             str = Console.ReadLine();
-            if (str != string.Empty) data[ind].Surname = str;
+            if (str != string.Empty) db.data[ind].Surname = str;
 
             Console.WriteLine("Введите новый номер телефона:");
             str = Console.ReadLine();
-            if (str != string.Empty) data[ind].PhoneNumber = str;
+            if (str != string.Empty) db.data[ind].PhoneNumber = str;
 
             Console.WriteLine("Серия паспорта:");
             str = Console.ReadLine();
-            if (str != string.Empty) data[ind].PassportSeries = str;
+            if (str != string.Empty) db.data[ind].PassportSeries = str;
 
             Console.WriteLine("Номер паспорта:");
             str = Console.ReadLine();
-            if (str != string.Empty) data[ind].PassportNumber = str;
+            if (str != string.Empty) db.data[ind].PassportNumber = str;
+
+            db.SaveDataBase();
         }
     }
 }
