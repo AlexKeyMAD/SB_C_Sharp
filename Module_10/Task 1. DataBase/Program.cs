@@ -15,7 +15,7 @@ namespace Task_1.DataBase
 
             Consultant CurentUser = db.Identification();
 
-            CurentUser.ShowData(ref db.data);
+            CurentUser.ShowData(ref db);
 
             Console.ReadKey();
         }

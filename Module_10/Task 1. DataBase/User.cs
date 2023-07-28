@@ -27,7 +27,7 @@ namespace Task_1.DataBase
             name = n;
         }   
         
-        public void ShowData(ref List<Client> data)
+        public void ShowData(ref DataBase db)
         {
             int num = -1;
 
@@ -35,9 +35,9 @@ namespace Task_1.DataBase
             {
                 Console.Clear();
 
-                for (var i = 0; i < data.Count; ++i)
+                for (var i = 0; i < db.data.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {Info(data[i])}");
+                    Console.WriteLine($"{i + 1}. {Info(db.data[i])}");
                 }
 
                 Console.WriteLine("Выбирите действие:");
@@ -50,7 +50,7 @@ namespace Task_1.DataBase
                 {
                     Console.WriteLine($"Введите номер строки для изменения (1 - {data.Count})");
                     var index = int.Parse(Console.ReadLine());
-                    if (index <= data.Count && index > 0) Change(ref data, num);
+                    if (index <= db.data.Count && index > 0) Change(ref db, num);
                 }
                                 
             }
@@ -70,13 +70,14 @@ namespace Task_1.DataBase
             return str;
         }
 
-        public void Change(ref List<Client> data, int ind)
+        public void Change(ref DataBase db, int ind)
         {
             Console.WriteLine("Введите новый номер телефона:");
             var str = Console.ReadLine();
 
-            if (str != string.Empty) data[ind].PhoneNumber = str;
+            if (str != string.Empty) db.data[ind].PhoneNumber = str;
 
+            db.SaveDataBase();
         }
     }
 }

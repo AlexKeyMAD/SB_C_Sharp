@@ -45,7 +45,7 @@ namespace Task_1.DataBase
             SaveDataBase();
         }
 
-        private void SaveDataBase()
+        public void SaveDataBase()
         {
             var json = JsonConvert.SerializeObject(Data);
 
