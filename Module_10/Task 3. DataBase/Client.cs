@@ -16,8 +16,9 @@ namespace Task_3.DataBase
         public string PhoneNumber { get; set; }
         public string PassportSeries { get; set; }
         public string PassportNumber { get; set; }
+        public Log ChangeLog { get; set; }
 
-        public Client()
+        public Client(IUser usr)
         {
 
             Console.Clear();
@@ -42,6 +43,8 @@ namespace Task_3.DataBase
             PhoneNumber = p;
             PassportSeries = ps;
             PassportNumber = pn;
+
+            ChangeLog = new Log("All", "Создание", usr);
         }
 
     }

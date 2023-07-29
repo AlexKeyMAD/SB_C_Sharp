@@ -13,7 +13,7 @@ namespace Task_3.DataBase
             DataBase db = new DataBase();
             db.Initialosation();
 
-            Consultant CurentUser = db.Identification();
+            IUser CurentUser = db.Identification();
 
             CurentUser.ShowData(ref db);
 

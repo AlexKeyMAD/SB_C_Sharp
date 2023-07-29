@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,15 @@ namespace Task_3.DataBase
         MANAGER = 2
     }
 
+    interface IUser
+    {
+        void ShowData(ref DataBase db);
+        void Change(ref DataBase db, int ind);
+        string ToString();
+    }
+
     [JsonObject(MemberSerialization.Fields)]
-    internal class Consultant
+    internal class Consultant : IUser
     {
         private string name;
         protected Roles role;
@@ -29,7 +37,11 @@ namespace Task_3.DataBase
             role = Roles.CONSULTANT;
         }
 
-        public virtual void ShowData(ref DataBase db)
+        public override string ToString()
+        {
+            return name;
+        }
+        public void ShowData(ref DataBase db)
         {
             int num = -1;
 
@@ -77,14 +89,18 @@ namespace Task_3.DataBase
             Console.WriteLine("Введите новый номер телефона:");
             var str = Console.ReadLine();
 
-            if (str != string.Empty) db.data[ind].PhoneNumber = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].PhoneNumber = str;
+                db.data[ind].ChangeLog = new Log("Номер телефона", "Изменение", this);
+            }
 
             db.SaveDataBase();
         }
     }
 
     [JsonObject(MemberSerialization.Fields)]
-    internal class Manager : Consultant
+    internal class Manager : Consultant,IUser
     {
         public Manager(string n) : base(n)
         {
@@ -100,12 +116,13 @@ namespace Task_3.DataBase
             str += data.Surname + "\t";
             str += data.PhoneNumber + "\t";
             str += data.PassportSeries + "\t";
-            str += data.PassportNumber + "\n";
+            str += data.PassportNumber + "\t";
+            str += data.ChangeLog == null ? "" : data.ChangeLog.ToString() + "\n";
 
             return str;
         }
 
-        public override void ShowData(ref DataBase db)
+        public new void ShowData(ref DataBase db)
         {
             int num = -1;
 
@@ -120,6 +137,7 @@ namespace Task_3.DataBase
 
                 Console.WriteLine("Выбирите действие:");
                 Console.WriteLine("1. Изменить");
+                Console.WriteLine("2. Создать");
                 Console.WriteLine("0. Выход");
 
                 var str = Console.ReadLine();
@@ -140,37 +158,70 @@ namespace Task_3.DataBase
                         Console.WriteLine($" {index}\t{Info(db.data[index - 1])}");
                         Change(ref db, index - 1);
                     }
+                } else if (num == 2)
+                {
+                    db.data.Add(new Client(this));
                 }
             }
         }
 
         public new void Change(ref DataBase db, int ind)
         {
+            string log = string.Empty;
+
             Console.WriteLine("Фамилия:");
             var str = Console.ReadLine();
-            if (str != string.Empty) db.data[ind].FamilyName = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].FamilyName = str;
+                log += "Фамилия";
+            }
 
             Console.WriteLine("Имя:");
             str = Console.ReadLine();
-            if (str != string.Empty) db.data[ind].Name = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].Name = str;
+                log += log == string.Empty ? "," : "" + "Имя";
+            }
 
             Console.WriteLine("Отчество:");
             str = Console.ReadLine();
-            if (str != string.Empty) db.data[ind].Surname = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].Surname = str;
+                log += log == string.Empty ? "," : "" + "Отчество";
+            }
 
-            Console.WriteLine("Введите новый номер телефона:");
+            Console.WriteLine("Номер телефона:");
             str = Console.ReadLine();
-            if (str != string.Empty) db.data[ind].PhoneNumber = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].PhoneNumber = str;
+                log += log == string.Empty ? "," : "" + "Номер телефона";
+            }
 
             Console.WriteLine("Серия паспорта:");
             str = Console.ReadLine();
-            if (str != string.Empty) db.data[ind].PassportSeries = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].PassportSeries = str;
+                log += log == string.Empty ? "," : "" + "Серия паспорта";
+            }
 
             Console.WriteLine("Номер паспорта:");
             str = Console.ReadLine();
-            if (str != string.Empty) db.data[ind].PassportNumber = str;
+            if (str != string.Empty)
+            {
+                db.data[ind].PassportNumber = str;
+                log += log == string.Empty ? "," : "" + "Номер паспорта";
+            }
 
-            db.SaveDataBase();
+            if (log != string.Empty)
+            {
+                db.data[ind].ChangeLog = new Log(log, "Изменение", this);
+                db.SaveDataBase();
+            }
         }
     }
 }
