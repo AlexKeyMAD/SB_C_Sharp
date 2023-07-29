@@ -39,9 +39,9 @@ namespace Task_3.DataBase
         private DateTime Date { get; set; }
         private string DataType { get; set; }
         private string Type { get; set; }
-        private IUser User { get; set; }
+        private Consultant User { get; set; }
 
-        public Log(string dataType, string type, IUser user)
+        public Log(string dataType, string type, Consultant user)
         {
             this.Date = DateTime.Now;
             this.DataType = dataType;

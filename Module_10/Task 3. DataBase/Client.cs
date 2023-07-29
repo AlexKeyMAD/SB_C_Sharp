@@ -18,7 +18,7 @@ namespace Task_3.DataBase
         public string PassportNumber { get; set; }
         public Log ChangeLog { get; set; }
 
-        public Client(IUser usr)
+        public Client(Consultant usr)
         {
 
             Console.Clear();
