@@ -64,7 +64,7 @@ namespace Task_3.DataBase
                 {
                     Console.WriteLine($"Введите номер строки для изменения (1 - {db.data.Count})");
                     var index = int.Parse(Console.ReadLine());
-                    if (index <= db.data.Count && index > 0) Change(ref db, num - 1);
+                    if (index <= db.data.Count && index > 0) Change(ref db, index - 1);
                 }
 
             }
