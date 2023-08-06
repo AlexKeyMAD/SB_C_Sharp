@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace DataBase
+namespace TaskDataBase
 {
     internal class DataBase
     {
@@ -128,39 +128,37 @@ namespace DataBase
             return -1;
         }
 
-        public Consultant Identification()
-        {
-            Console.WriteLine("Введите имя пользователя:");
-            var name = Console.ReadLine();
+        public Consultant Identification(string name)
+        {       
 
             var fnd = FindUser(name);
 
             if (fnd == -1)
             {
-                Console.WriteLine("Выберите роль пользователя:");
+                //Console.WriteLine("Выберите роль пользователя:");
 
-                int n = 0;
+                //int n = 0;
 
-                foreach (var role in Enum.GetValues(typeof(Roles)))
-                {
-                    n++;
-                    Console.WriteLine($"{n}. {role.ToString()}");
-                }
+                //foreach (var role in Enum.GetValues(typeof(Roles)))
+                //{
+                //    n++;
+                //    Console.WriteLine($"{n}. {role.ToString()}");
+                //}
 
-                int r = int.Parse(Console.ReadLine());
+                //int r = int.Parse(Console.ReadLine());
 
-                r = r > n ? 1 : r;
+                //r = r > n ? 1 : r;
 
-                Consultant usr = null;
+                //Consultant usr = null;
 
-                if ((Roles)r == Roles.CONSULTANT) usr = new Consultant(name);
-                else usr = new Manager(name);
+                //if ((Roles)r == Roles.CONSULTANT) usr = new Consultant(name);
+                //else usr = new Manager(name);
 
-                Users.Add(usr);
+                //Users.Add(usr);
 
-                SaveUsers();
+                //SaveUsers();
 
-                return usr;
+                return null;
             }
             else
             {

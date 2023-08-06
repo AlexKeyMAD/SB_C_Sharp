@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase
+namespace TaskDataBase
 {
     [JsonObject(MemberSerialization.Fields)]
     internal class Client

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DataBase
+namespace TaskDataBase
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,6 +23,28 @@ namespace DataBase
         public MainWindow()
         {
             InitializeComponent();
+
+            DataBase db = new DataBase();
+            db.Initialosation();
+
+            UserIdentification UI = new UserIdentification();
+
+            IUser CurentUser = null;
+
+            while (CurentUser == null)
+            {
+                if (UI.ShowDialog() == true)
+                {
+                    if (UI.User.Text != "")
+                    {
+                        CurentUser = db.Identification(UI.User.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Что-то пошло не так");
+                    }
+                }
+            }
         }
     }
 }
